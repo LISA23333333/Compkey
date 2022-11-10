@@ -133,9 +133,9 @@ export default {
   .chart{
     position: absolute;
     left: 70px;
-    top: 130px;
+    top: 135px;
     width: 1250px;
-    height: 320px;
+    height: 330px;
     opacity: 1;
     background-color: #ffffff;
   }
@@ -150,7 +150,7 @@ export default {
       /* 关键字列表 */
       position: absolute;
       left: 70px;
-      top: 465px;
+      top: 485px;
       width: 660px;
       height: 520px;
       opacity: 1;
@@ -164,7 +164,7 @@ export default {
       /* 结果推荐 */
       position: absolute;
       left: 745px;
-      top: 465px;
+      top: 485px;
       width: 575px;
       height: 520px;
       opacity: 1;

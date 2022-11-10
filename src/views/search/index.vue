@@ -66,7 +66,7 @@
   .animateBg{
     position: absolute;
     left: 0px;
-    top: 13px;
+    top: 8px;
     width: 1200px;
     height: 360px;
     opacity: 1;
@@ -83,7 +83,7 @@
   .search{
     position: absolute;
     left: 0px;
-    top: 250px;
+    top: 245px;
     width: 1200px;
     height: 160px;
     overflow: hidden;
@@ -110,7 +110,7 @@
   .wave{
     position: absolute;
     left: 205px;
-    top: 430px;
+    top: 425px;
     width: 1000px;
     height: 200px;
     overflow: hidden;

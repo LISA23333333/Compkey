@@ -33,7 +33,7 @@ export default {
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: 'Compkey竞争关键字推荐' }}].concat(matched)
+        matched = [{ path: '/search', meta: { title: 'Compkey竞争关键字推荐' }}].concat(matched)
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)

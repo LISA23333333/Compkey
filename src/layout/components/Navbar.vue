@@ -39,7 +39,7 @@ export default {
     return {
       userPng: require('../../../public/user.png'),
       userPng2: require('../../../public/user2.png'),
-      userPng3: require('../../../public/user3.png'),
+      userPng3: require('../../../public/user3.png')
     }
   },
   computed: {
@@ -48,15 +48,15 @@ export default {
       'avatar'
     ])
   },
-  
+
   methods: {
-    changePng(){
+    changePng() {
       this.userPng = this.userPng2
     },
-    changePng2(){
+    changePng2() {
       this.userPng = require('../../../public/user.png')
     },
-    changePng3(){
+    changePng3() {
       this.userPng = this.userPng3
     },
     toggleSideBar() {

@@ -1,45 +1,45 @@
 <template>
   <div class="login-container">
     <el-card class="login">
-       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
         <div class="title-container">
           <h3 class="title">登录</h3>
         </div>
 
-          <el-form-item prop="username">
-            <span class="svg-container">
-              <svg-icon icon-class="user" />
-            </span>
-            <el-input
-              ref="username"
-              v-model="loginForm.username"
-              placeholder="Username"
-              name="username"
-              type="text"
-              tabindex="1"
-              auto-complete="on"
-            />
-          </el-form-item>
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="username"
+            v-model="loginForm.username"
+            placeholder="Username"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
 
-          <el-form-item prop="password">
-            <span class="svg-container">
-              <svg-icon icon-class="password" />
-            </span>
-            <el-input
-              :key="passwordType"
-              ref="password"
-              v-model="loginForm.password"
-              :type="passwordType"
-              placeholder="Password"
-              name="password"
-              tabindex="2"
-              auto-complete="on"
-              @keyup.enter.native="handleLogin"
-            />
-            <span class="show-pwd" @click="showPwd">
-              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-            </span>
-          </el-form-item>
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            placeholder="Password"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </span>
+        </el-form-item>
 
         <el-button :loading="loading" type="primary" @click.native.prevent="handleLogin">进入系统</el-button>
         <a style="color:cornflowerblue" href="#/register">没有账号？点击注册</a>
@@ -56,7 +56,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-  // import {validPassword, exitUsername} from '@/utils/validate'
+// import {validPassword, exitUsername} from '@/utils/validate'
 export default {
   name: 'Login',
   data() {
@@ -70,7 +70,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {//!validPassword(username,value)
+      if (value.length < 6) { //! validPassword(username,value)
         callback(new Error('密码错误，请重新输入'))
       } else {
         callback()
@@ -166,7 +166,7 @@ $cursor: rgb(84, 84, 84);
         -webkit-text-fill-color: $cursor !important;
       }
     }
-    
+
   }
 
   .el-form-item {
@@ -198,16 +198,17 @@ body,html{
     position: relative;
     margin: auto;
     top: 55px;
-    width: 1100px;
-    height: 660px;
+    width: 1050px;
+    height: 610px;
     opacity: 1;
     background: #ffffff;
     border-radius: 15px;
     background-image:url(../../.././public/login.jpg);
+    background-size: contain;
   }
   .login-form {
     position: relative;
-    left: 288px;
+    left: 270px;
     top: -21px;
     width: 521px;
     height: 681px;

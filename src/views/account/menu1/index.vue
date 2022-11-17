@@ -31,7 +31,7 @@
       <span class="logo2">头像昵称</span>
       <hr class="myLine2">
       <div class="img">
-        <img  class="img2" src="../../../../public/docer-356527674.jpg">
+        <img class="img2" src="../../../../public/docer-356527674.jpg">
       </div>
       <div class="six">
         <div class="seven">
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
- 
+
   </div>
 </template>
 

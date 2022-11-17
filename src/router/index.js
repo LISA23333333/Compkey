@@ -57,7 +57,7 @@ export const constantRoutes = [
       meta: { title: 'Compkey', icon: 'dashboard' }
     },
     {
-      hidden:true,
+      hidden: true,
       path: 'dashboard',
       name: 'Compkey竞争关键字推荐',
       component: () => import('@/views/compkey/index'),

@@ -148,7 +148,7 @@ service2.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    // console.log('err' + error) // for debug
     // Message({
     //   message:"查询超时！",
     //   type: 'error',

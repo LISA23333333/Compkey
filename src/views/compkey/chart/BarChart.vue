@@ -128,8 +128,10 @@ export default {
             type: "value",
             name: "词频",
             min: 0,
-            max: 30000,
-            interval: 3000,
+            max: this.xMax,
+            interval: this.xInterval,
+            // max:5000,
+            // interval:500,
             axisLine: {
               show: true,
               lineStyle: {

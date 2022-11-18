@@ -20,7 +20,8 @@ const store = new Vuex.Store({
   midWords: {},
   midComp:{},
   wordCount: [],
-  weight: []
+  weight: [],
+  time:'',
 })
 
 export default store

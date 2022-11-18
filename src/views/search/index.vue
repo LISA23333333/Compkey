@@ -54,6 +54,7 @@ export default {
         console.log(store.keyword);
         getResult(encodeURIComponent(store.keyword)).then((response) => {
           res = response;
+          store.time = res.LocalTime
           store.compWords = res.comp_word
           store.wordCount = res.word_statistics
           store.costTime = (Date.now()-time1)/1000

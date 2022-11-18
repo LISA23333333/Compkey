@@ -1,10 +1,11 @@
 <template>
   <div :class="className" :style="{ height: height, width: width }" >
-    {{child}}
+    {{}}
   </div>
 </template>
 
 <script>
+import store from "@/store";
 import * as echarts from "echarts/core";
 // 引入柱状图图表，图表后缀都为 Chart
 import { BarChart, LineChart } from "echarts/charts";
@@ -50,43 +51,12 @@ export default {
   },
   data() {
     return {
+      store,
+      xMax: Math.max(store.wordCount),
+      xInterval: Math.max(store.wordCount)/10,
+      yMax: Math.max(store.compWords[0][1]),
+      yInterval: Math.max(store.compWords[0][1])/10,
       chart: null,
-      words: {
-        w1: "1",
-        w2: "2",
-        w3: "3",
-        w4: "4",
-        w5: "5",
-        w6: "6",
-        w7: "7",
-        w8: "8",
-        w9: "9",
-        w10: "10",
-      },
-      count: {
-        c1: 80,
-        c2: 180,
-        c3: 50,
-        c4: 280,
-        c5: 60,
-        c6: 90,
-        c7: 148,
-        c8: 380,
-        c9: 98,
-        c10: 80,
-      },
-      comp: {
-        c1: 0.8,
-        c2: 0.18,
-        c3: 0.5,
-        c4: 0.28,
-        c5: 0.6,
-        c6: 0.9,
-        c7: 0.18,
-        c8: 0.38,
-        c9: 0.98,
-        c10: 0.8,
-      },
     };
   },
   mounted() {
@@ -137,16 +107,16 @@ export default {
           {
             type: "category",
             data: [
-              this.words.w1,
-              this.words.w2,
-              this.words.w3,
-              this.words.w4,
-              this.words.w5,
-              this.words.w6,
-              this.words.w7,
-              this.words.w8,
-              this.words.w9,
-              this.words.w10,
+              store.compWords[0][0],
+              store.compWords[1][0],
+              store.compWords[2][0],
+              store.compWords[3][0],
+              store.compWords[4][0],
+              store.compWords[5][0],
+              store.compWords[6][0],
+              store.compWords[7][0],
+              store.compWords[8][0],
+              store.compWords[9][0],
             ],
             axisPointer: {
               type: "shadow",
@@ -158,8 +128,8 @@ export default {
             type: "value",
             name: "词频",
             min: 0,
-            max: 600,
-            interval: 60,
+            max: 30000,
+            interval: 3000,
             axisLine: {
               show: true,
               lineStyle: {
@@ -174,8 +144,8 @@ export default {
             type: "value",
             name: "竞争度",
             min: 0,
-            max: 1,
-            interval: 0.1,
+            max: this.yMax,
+            interval: this.yInterval,
             axisLine: {
               show: true,
               lineStyle: {
@@ -197,16 +167,16 @@ export default {
               },
             },
             data: [
-              this.count.c1,
-              this.count.c2,
-              this.count.c3,
-              this.count.c4,
-              this.count.c5,
-              this.count.c6,
-              this.count.c7,
-              this.count.c8,
-              this.count.c9,
-              this.count.c10,
+              store.wordCount[0],
+              store.wordCount[1],
+              store.wordCount[2],
+              store.wordCount[3],
+              store.wordCount[4],
+              store.wordCount[5],
+              store.wordCount[6],
+              store.wordCount[7],
+              store.wordCount[8],
+              store.wordCount[9],
             ],
             animationDuration,
           },
@@ -220,16 +190,16 @@ export default {
               },
             },
             data: [
-              this.comp.c1,
-              this.comp.c2,
-              this.comp.c3,
-              this.comp.c4,
-              this.comp.c5,
-              this.comp.c6,
-              this.comp.c7,
-              this.comp.c8,
-              this.comp.c9,
-              this.comp.c10,
+              store.compWords[0][1],
+              store.compWords[1][1],
+              store.compWords[2][1],
+              store.compWords[3][1],
+              store.compWords[4][1],
+              store.compWords[5][1],
+              store.compWords[6][1],
+              store.compWords[7][1],
+              store.compWords[8][1],
+              store.compWords[9][1],
             ],
             animationDuration,
           },

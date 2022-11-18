@@ -16,6 +16,7 @@
         v-model="keywords"
         class="input"
         placeholder="请输入您想查询的关键词"
+        @keyup.enter.native="searchWord"
       />
       <div class="button">
         <el-button type="primary" icon="el-icon-search" @click="searchWord" />
@@ -27,54 +28,61 @@
   </div>
 </template>
 <script>
-import { getResult } from '@/api/search'
-import compAnimate from './chart/compAnimate'
-import Wave from './wave/Wave'
+import store from "@/store";
+import { getResult } from "@/api/search";
+import compAnimate from "./chart/compAnimate";
+import Wave from "./wave/Wave";
 export default {
   components: {
     compAnimate,
-    Wave
+    Wave,
   },
   data() {
     return {
-      list: null,
-      keywords: '',
-      status: '',
-      loading: false
-    }
+      keywords: "",
+      status: "",
+      loading: false,
+    };
   },
   methods: {
     searchWord(event) {
-      getResult(encodeURIComponent(this.keywords)).then(response => {
-        this.list = response.data.items
-        console.log(response)
-      })
-      console.log(this.list)
       if (this.keywords) {
-        if (this.status) {
-          this.loading = false
-          if (this.status == '0') {
-            this.$alert('抱歉，该关键词未被收录！', '查询失败', {
-              confirmButtonText: '确定'
-            })
-            this.keywords = ''
+        var time1=Date.now()
+        var res;
+        this.loading = true;
+        store.keyword = this.keywords
+        console.log(store.keyword);
+        getResult(encodeURIComponent(store.keyword)).then((response) => {
+          res = response;
+          store.compWords = res.comp_word
+          store.wordCount = res.word_statistics
+          store.costTime = (Date.now()-time1)/1000
+          store.midWords = Object.values(res.midwords_info_list)
+          store.midComp = Object.keys(res.midwords_info_list)
+          store.weight = Object.values(res.weight_dict)
+          console.log(store.weight)
+          if (!res) {
+            console.log(res);
+            this.loading = false;
+            this.$alert("抱歉，该关键词未被收录！", "查询失败", {
+              confirmButtonText: "确定",
+            });
+            this.keywords = "";
           } else {
-            this.$refs.search.style.display = 'none'
+            this.$refs.search.style.display = "none";
             this.$message({
-              message: '已查询到相关信息，正在为您跳转……',
-              type: 'success'
-            })
+              message: "已查询到相关信息，正在为您跳转……",
+              type: "success",
+            });
+            this.$router.push({ path: "/dashboard" });
           }
-          this.$router.push({ path: '/dashboard' })
-        } else {
-          this.loading = true
-        }
+        });
       } else {
-        this.$message.error('关键词不能为空！')
+        this.$message.error("关键词不能为空！");
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

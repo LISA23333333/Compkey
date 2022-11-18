@@ -11,14 +11,14 @@
         <span class="word">当前状态</span>
         <span class="word2">
           <div class="bottom clearfix">
-            <time class="time">{{ currentDate }}</time>
+            <time class="time">查询时刻：{{ currentDate }}</time>
           </div>
         </span>
       </el-header>
       <el-main>
         <span
           class="sentence"
-        >关键词“{{ keyword }}”查询成功，本次查询共花费{{ costTime }}秒！</span>
+        >关键词“{{ store.keyword }}”查询成功，本次查询共花费{{ store.costTime }}秒！</span>
       </el-main>
     </el-container>
 
@@ -27,9 +27,9 @@
         <span class="word">搜索</span>
       </el-header>
       <el-main>
-        <el-input v-model="inputKey" class="input" />
+        <el-input v-model="inputKey" class="input" @keyup.enter.native="searchWord" />
         <div class="button">
-          <el-button type="primary" icon="el-icon-search" @click="Click" />
+          <el-button type="primary" icon="el-icon-search" @click="searchWord" />
         </div>
       </el-main>
     </el-container>
@@ -45,12 +45,12 @@
 
     <el-container class="card3">
       <el-main>
-        <el-table :data="tableData" stripe height="524px" class="myTable">
-          <el-table-column prop="midWord" label="中介关键字" width="180" />
+        <el-table :data="tableData" stripe height="524px" class="myTable" >
+          <el-table-column prop="midWord" label="中介关键字" width="160"  />
           <el-table-column
             prop="compWord"
             label="竞争性关键字列表"
-            width="480"
+            width="500"
           />
         </el-table>
       </el-main>
@@ -70,7 +70,7 @@
           >
             <el-card :body-style="{ padding: '0px' }" class="suggest">
               <div style="padding: 14px; font-size: small">
-                <span>关键字：{{ keyword }}</span>
+                <span>关键字：{{ store.keyword }}</span>
                 <br>
                 <br>
                 <span>推荐字：{{ compkey.compWord }}</span>
@@ -91,6 +91,8 @@
   </div>
 </template>
 <script>
+import { getResult } from "@/api/search";
+import store from "@/store";
 import BarChart from './chart/BarChart'
 import WordCloud from './chart/WordCloud.vue'
 export default {
@@ -99,97 +101,140 @@ export default {
     WordCloud
   },
   data() {
-    const item = {
-      midWord: 'midWord',
-      compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
-    }
     return {
+      store,
       loading: false,
-      keyword: '未闻花名',
-      compkeys: [
-        { compWord: 'one', comp: 0, value: null },
-        { compWord: 'two', comp: 0, value: null },
-        { compWord: 'three', comp: 0, value: null },
-        { compWord: 'four', comp: 0, value: null },
-        { compWord: 'five', comp: 0, value: null },
-        { compWord: 'six', comp: 0, value: null },
-        { compWord: 'seven', comp: 0, value: null },
-        { compWord: 'eight', comp: 0, value: null },
-        { compWord: 'nine', comp: 0, value: null },
-        { compWord: 'ten', comp: 0, value: null }
-      ],
       inputKey: '',
-      costTime: 123,
-      tableData: [
-        {
-          midWord: 'midWord1',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+      tableData: [{
+         midWord:store.midComp[0],
+         compWord:store.midWords[0]
         },
         {
-          midWord: 'midWord2',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[1],
+         compWord:store.midWords[1]
         },
         {
-          midWord: 'midWord3',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[2],
+         compWord:store.midWords[2]
         },
         {
-          midWord: 'midWord4',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[3],
+         compWord:store.midWords[3]
         },
         {
-          midWord: 'midWord5',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[4],
+         compWord:store.midWords[4]
         },
         {
-          midWord: 'midWord6',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[5],
+         compWord:store.midWords[5]
         },
         {
-          midWord: 'midWord7',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[6],
+         compWord:store.midWords[6]
         },
         {
-          midWord: 'midWord8',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[7],
+         compWord:store.midWords[7]
         },
         {
-          midWord: 'midWord9',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
+         midWord:store.midComp[8],
+         compWord:store.midWords[8]
         },
         {
-          midWord: 'midWord10',
-          compWord: '片尾曲 歌曲 图片 中文版 歌词 主题曲 真人版 简谱 ed 动漫 '
-        }
+         midWord:store.midComp[9],
+         compWord:store.midWords[9]
+        },
+        {
+         midWord:store.midComp[10],
+         compWord:store.midWords[10]
+        },
+        {
+         midWord:store.midComp[11],
+         compWord:store.midWords[11]
+        },
+        {
+         midWord:store.midComp[12],
+         compWord:store.midWords[12]
+        },
+        {
+         midWord:store.midComp[13],
+         compWord:store.midWords[13]
+        },
+        {
+         midWord:store.midComp[14],
+         compWord:store.midWords[14]
+        },
+        {
+         midWord:store.midComp[15],
+         compWord:store.midWords[15]
+        },
+        {
+         midWord:store.midComp[16],
+         compWord:store.midWords[16]
+        },
+        {
+         midWord:store.midComp[17],
+         compWord:store.midWords[17]
+        },
+        {
+         midWord:store.midComp[18],
+         compWord:store.midWords[18]
+        },
+        {
+         midWord:store.midComp[19],
+         compWord:store.midWords[19]
+        },
       ],
       activeName: 'first',
       currentDate: new Date(),
       colors: ['#99A9BF', '#F7BA2A', '#FF9900']  // 等同于 { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
     }
   },
+  watch: {
+    $route() {
+      //监听相同路由下参数变化的时候，从而实现异步刷新
+      // this.loading = true;
+      //重新获取数据
+      store
+    },
+  },
+ 
   methods: {
-    Click(event) {
+    searchWord(event) {
       if (this.inputKey) {
-        if (this.status) {
-          this.loading = false
-          if (this.status == '0') {
-            this.$alert('抱歉，该关键词未被收录！', '查询失败', {
-              confirmButtonText: '确定'
-            })
-            this.inputKey = ''
+        var time1=Date.now()
+        var res;
+        this.loading = true;
+        store.keyword = this.inputKey
+        console.log(store.keyword);
+        getResult(encodeURIComponent(store.keyword)).then((response) => {
+          res = response;
+          store.compWords = res.comp_word
+          store.wordCount = res.word_statistics
+          store.costTime = (Date.now()-time1)/1000
+          store.midWords = Object.values(res.midwords_info_list)
+          store.midComp = Object.keys(res.midwords_info_list)
+          store.weight = res.weight_dict
+          console.log(store.midWords)
+          if (!res) {
+            console.log(res);
+            this.loading = false;
+            this.$alert("抱歉，该关键词未被收录！", "查询失败", {
+              confirmButtonText: "确定",
+            });
+            this.keywords = "";
           } else {
-            this.$refs.search.style.display = 'none'
             this.$message({
-              message: '已查询到相关信息，正在为您跳转……',
-              type: 'success'
-            })
+              message: "已查询到相关信息，正在为您跳转……",
+              type: "success",
+            });
+            this.loading = false;
+            this.$router.push({ path: "/dashboard" });
           }
-          this.$router.push({ path: '/dashboard' })
-        } else {
-          this.loading = true
-        }
+        });
       } else {
-        this.$message.error('关键词不能为空！')
+        this.$message.error("关键词不能为空！");
       }
     }
   }
@@ -202,7 +247,7 @@ export default {
   left: 0px;
   top: 0px;
   width: 100%;
-  height: 150%;
+  height: 160%;
   opacity: 1;
   background: hsla(217, 44%, 96%, 0.868);
 }
@@ -247,7 +292,7 @@ export default {
   position: absolute;
   left: 70px;
   top: 515px;
-  width: 660px;
+  width: 670px;
   height: 520px;
   opacity: 1;
   background-color: #ffffff;
@@ -304,7 +349,7 @@ export default {
   /* box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.6); */
 }
 .myTable {
-  left: 13px;
+  left: 12px;
   top: -4px;
   width: 100%;
   max-height: 103%;
@@ -312,6 +357,7 @@ export default {
   overflow: auto;
   border: none;
   padding: none;
+  text-align: center;
 }
 .input {
   /* input */
@@ -342,7 +388,7 @@ export default {
   /* 关键字：未闻花名 */
   position: absolute;
   right: 0px;
-  width: 327px;
+  width: 380px;
   height: 17px;
   opacity: 1;
 }

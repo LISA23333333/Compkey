@@ -13,7 +13,14 @@ const store = new Vuex.Store({
     settings,
     user
   },
-  getters
+  getters,
+  keyword: '',
+  costTime: '',//单位：秒
+  compWords: [],
+  midWords: {},
+  midComp:{},
+  wordCount: [],
+  weight: []
 })
 
 export default store

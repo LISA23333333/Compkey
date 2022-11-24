@@ -2,10 +2,10 @@
 
 ```bash
 # clone the project
-git clone https://……
+git clone https://github.com/LISA23333333/Compkey.git
 
 # enter the project directory
-cd vue-admin-template
+cd compkey 
 
 # install dependency
 npm install
